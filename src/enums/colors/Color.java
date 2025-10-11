@@ -1,6 +1,6 @@
 package enums.colors;
 
-public enum Color {  //מה הטעם בכלל להשתמש ב-enum בתרגיל כזה, גם ככה זה פשוט להעתיק מ-GPT כי זאת לא דרך רגילה להשתמש ב-enums..
+public enum Color {  //חשבתי בהתחלה שאין טעם להשתמש פה ב-enum אז GPT עזר לי להבין איך ליצור את ההצהרה הזאת נכון:
     RED(new int[]{255, 0, 0}),
     GREEN(new int[]{0, 255, 0}),
     BLUE(new int[]{0, 0, 255}),
