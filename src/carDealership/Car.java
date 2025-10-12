@@ -1,9 +1,12 @@
 package carDealership;
 
-import carDealership.custom_exceptions.*;
+import carDealership.custom_exceptions.*;  //.* עושה אימפורט לכל המחלקות בתיקיה.
+import employee.EmployeeRecord;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Car {
     private String plate;
@@ -90,12 +93,42 @@ public class Car {
             setPrice(getPrice() - getPrice() * discount_Percentage);
         }
     }
-    /*
-    public void selling_Vehicle() {
-        Path filePath = Paths.get()
-        Files.createDirectories(Car.class);
+
+    public void selling_Vehicle() throws IOException {
+        //creating/updating the sold_vehicles logs file:
+        try {
+            String this_dir = Objects.requireNonNull(Car.class.getResource("")).getPath();  //"" מוצאת את כתובת הדיירקטורי הנוכחי של Car-כלומר את carDealership.
+            //כתיבה כזאת אינה מומלצת לשמירת הקובץ עצמו בין הבניות אבל זה לא משנה לעבודה הזאת וביקשו לשים את כל הקבצים בתוך carDealership וזה כבר נמצא ב-root directory אז...
+            String resources_path = this_dir + "/sold_vehicles.txt";
+            File file = new File(resources_path);
+
+            //checking weather the file exists:
+            boolean file_exists = false;
+            if (file.createNewFile()) {
+                System.out.println("File created at: " + file.getAbsolutePath());
+            } else {
+                System.out.println("File already exists at: " + file.getAbsolutePath());
+            }
+
+            // write into the file
+            try (FileWriter writer = new FileWriter(file, true)) {  // סוגר את writer אוטומטית, גם בודק exception בעצמו.
+                if (!file_exists) {
+                    writer.write("sold vehicles log:\n\n");
+                }
+
+                writer.write(this.toString());
+                writer.write("\n------------------------------\n");
+                System.out.println("Sale recorded successfully!");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();  // מדפיס report על השגיאה.
+        }
+        //
     }
-    */
+
+
+
 
     @Override
     public String toString() {
