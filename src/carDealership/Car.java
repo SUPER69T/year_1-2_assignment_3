@@ -2,48 +2,49 @@ package carDealership;
 
 import carDealership.custom_exceptions.*;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class Car {
     private String plate;
     private int model_year;
     private double price;
     private double Kilometrage;
     private String manufacturer;
-    public Car(String plate, int model_year, double price, double Kilometrage, String manufacturer) throws Invalid_manufacturer_exception, Invalid_Kilometrage_exception, Invalid_model_year_exception, Invalid_price_exception, Invalid_plate_length_exception {  //תאכלס חוץ מטיפה תרגול כל ה-exceptions הן מיותרות לגמרי.
-        boolean exception_thrown = check_plate(plate);
-        exception_thrown = check_model_year(model_year);
-        exception_thrown = check_price(price);
-        exception_thrown = check_Kilometrage(Kilometrage);
-        exception_thrown = check_manufacturer(manufacturer);
-
-        if (!exception_thrown) {
+    public Car(String plate, int model_year, double price, double Kilometrage, String manufacturer) throws Invalid_plate_length_exception, Invalid_model_year_exception, Invalid_price_exception, Invalid_Kilometrage_exception, Invalid_manufacturer_exception {
+        if (!check_plate(plate) || !check_model_year(model_year) || !check_price(price) || !check_Kilometrage(Kilometrage) || !check_manufacturer(manufacturer)) {
             this.plate = plate;
             this.model_year = model_year;
             this.price = price;
             this.Kilometrage = Kilometrage;
             this.manufacturer = manufacturer;
-            }
+        }
     }
 
-    //exception_checks:
-     public boolean check_plate(String plate) throws Invalid_plate_length_exception{
-         if (!(4 < plate.length() && plate.length() < 7)) {throw new Invalid_plate_length_exception("Invalid plate length.");}
+    //exception_checks:  //אלו הן יותר מדי - exceptions :(..
+     public boolean check_plate(String plate) throws Invalid_plate_length_exception {
+         if (!(4 < plate.length() && plate.length() < 7)) {throw new Invalid_plate_length_exception("The plate length must be between either 5 or 6.");}
          return true;
      }
-     public boolean check_model_year(int model_year) throws Invalid_model_year_exception{
-         if (!(model_year > 2017)) {throw new Invalid_model_year_exception("Too old of a model.");}
+     public boolean check_model_year(int model_year) throws Invalid_model_year_exception {
+         if (!(model_year > 2017)) {throw new Invalid_model_year_exception("The model year must be 2017 and newer.");}
          return true;
      }
-     public boolean check_price(double price) throws Invalid_price_exception{
-         if (!(price >= 0)) {throw new Invalid_price_exception("Invalid price.");}
+     public boolean check_price(double price) throws Invalid_price_exception {
+         if (!(price >= 0)) {throw new Invalid_price_exception("The price must be a positive number.");}
          return true;
      }
-     public boolean check_Kilometrage(double kilometrage) throws Invalid_Kilometrage_exception{
-         if (!(kilometrage >= 0)) {throw new Invalid_Kilometrage_exception("Invalid Kilometrage.");}
+     public boolean check_Kilometrage(double kilometrage) throws Invalid_Kilometrage_exception {
+         if (!(kilometrage >= 0)) {throw new Invalid_Kilometrage_exception("The kilometrage must be a positive number.");}
          return true;
      }
-     public boolean check_manufacturer(String manufacturer) throws Invalid_manufacturer_exception{
-         if (manufacturer.isEmpty()) {throw new Invalid_manufacturer_exception("Empty manufacturer name.");}
+     public boolean check_manufacturer(String manufacturer) throws Invalid_manufacturer_exception {
+         if (manufacturer.isEmpty()) {throw new Invalid_manufacturer_exception("The manufacturer's name cannot be empty.");}
          return true;
+     }
+     public boolean check_discount_diff(double difference) throws Invalid_discount_pricing {
+        if (difference > 5000) {throw new Invalid_discount_pricing("The discount cannot be greater than 5000.");}
+        return true;
      }
     //
 
@@ -83,8 +84,21 @@ public class Car {
     }
     //
 
+    public void vehicle_discount(double discount_Percentage){
+        if (check_discount_diff(getPrice() * discount_Percentage)) return;
+        else {
+            setPrice(getPrice() - getPrice() * discount_Percentage);
+        }
+    }
+    /*
+    public void selling_Vehicle() {
+        Path filePath = Paths.get()
+        Files.createDirectories(Car.class);
+    }
+    */
+
     @Override
     public String toString() {
-        return String.format(plate, model_year, price, Kilometrage, manufacturer);
+        return String.format("%s %d %f %f %s.", plate, model_year, price, Kilometrage, manufacturer);
     }
 }
