@@ -15,7 +15,7 @@ public class Car {
     private double Kilometrage;
     private String manufacturer;
     public Car(String plate, int model_year, double price, double Kilometrage, String manufacturer) throws Invalid_plate_length_exception, Invalid_model_year_exception, Invalid_price_exception, Invalid_Kilometrage_exception, Invalid_manufacturer_exception {
-        if (!check_plate(plate) || !check_model_year(model_year) || !check_price(price) || !check_Kilometrage(Kilometrage) || !check_manufacturer(manufacturer)) {
+        if (!check_Plate(plate) || !check_Model_Year(model_year) || !check_Price(price) || !check_Kilometrage(Kilometrage) || !check_Manufacturer(manufacturer)) {
             this.plate = plate;
             this.model_year = model_year;
             this.price = price;
@@ -25,15 +25,15 @@ public class Car {
     }
 
     //exception_checks:  //אלו הן יותר מדי - exceptions :(..
-     public boolean check_plate(String plate) throws Invalid_plate_length_exception {
+     public boolean check_Plate(String plate) throws Invalid_plate_length_exception {
          if (!(4 < plate.length() && plate.length() < 7)) {throw new Invalid_plate_length_exception("The plate length must be between either 5 or 6.");}
          return true;
      }
-     public boolean check_model_year(int model_year) throws Invalid_model_year_exception {
+     public boolean check_Model_Year(int model_year) throws Invalid_model_year_exception {
          if (!(model_year > 2017)) {throw new Invalid_model_year_exception("The model year must be 2017 and newer.");}
          return true;
      }
-     public boolean check_price(double price) throws Invalid_price_exception {
+     public boolean check_Price(double price) throws Invalid_price_exception {
          if (!(price >= 0)) {throw new Invalid_price_exception("The price must be a positive number.");}
          return true;
      }
@@ -41,11 +41,11 @@ public class Car {
          if (!(kilometrage >= 0)) {throw new Invalid_Kilometrage_exception("The kilometrage must be a positive number.");}
          return true;
      }
-     public boolean check_manufacturer(String manufacturer) throws Invalid_manufacturer_exception {
+     public boolean check_Manufacturer(String manufacturer) throws Invalid_manufacturer_exception {
          if (manufacturer.isEmpty()) {throw new Invalid_manufacturer_exception("The manufacturer's name cannot be empty.");}
          return true;
      }
-     public boolean check_discount_diff(double difference) throws Invalid_discount_pricing {
+     public boolean check_Discount_Diff(double difference) throws Invalid_discount_pricing {
         if (difference > 5000) {throw new Invalid_discount_pricing("The discount cannot be greater than 5000.");}
         return true;
      }
@@ -61,17 +61,17 @@ public class Car {
 
     //setters:
     public void setPlate(String plate) throws Invalid_plate_length_exception {
-        if(check_plate(plate)){
+        if(check_Plate(plate)){
             this.plate = plate;
         }
     }
     public void setModel_year(int model_year) throws Invalid_model_year_exception {
-        if(check_model_year(model_year)){
+        if(check_Model_Year(model_year)){
             this.model_year = model_year;
         }
     }
     public void setPrice(double price) throws Invalid_price_exception {
-        if(check_price(price)) {
+        if(check_Price(price)) {
             this.price = price;
         }
     }
@@ -81,20 +81,20 @@ public class Car {
         }
     }
     public void setManufacturer(String manufacturer) throws Invalid_manufacturer_exception {
-        if(check_manufacturer(manufacturer)){
+        if(check_Manufacturer(manufacturer)){
             this.manufacturer = manufacturer;
         }
     }
     //
 
-    public void vehicle_discount(double discount_Percentage){
-        if (check_discount_diff(getPrice() * discount_Percentage)) return;
+    public void vehicle_Discount(double discount_Percentage){
+        if (check_Discount_Diff(getPrice() * discount_Percentage)) return;
         else {
             setPrice(getPrice() - getPrice() * discount_Percentage);
         }
     }
 
-    public void selling_Vehicle() throws IOException {
+    public void sell_Vehicle() throws IOException {
         //creating/updating the sold_vehicles logs file:
         try {
             String this_dir = Objects.requireNonNull(Car.class.getResource("")).getPath();  //"" מוצאת את כתובת הדיירקטורי הנוכחי של Car-כלומר את carDealership.
@@ -118,17 +118,14 @@ public class Car {
 
                 writer.write(this.toString());
                 writer.write("\n------------------------------\n");
-                System.out.println("Sale recorded successfully!");
+                System.out.println("Sale recorded successfully!\n");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();  // מדפיס report על השגיאה.
+            e.printStackTrace();  // מדפיס report שגיאות.
         }
         //
     }
-
-
-
 
     @Override
     public String toString() {
