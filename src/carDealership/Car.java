@@ -94,7 +94,7 @@ public class Car {
         }
     }
 
-    public void selling_Vehicle() throws IOException {
+    public void sell_Vehicle() throws IOException {
         //creating/updating the sold_vehicles logs file:
         try {
             String this_dir = Objects.requireNonNull(Car.class.getResource("")).getPath();  //"" מוצאת את כתובת הדיירקטורי הנוכחי של Car-כלומר את carDealership.
@@ -118,11 +118,11 @@ public class Car {
 
                 writer.write(this.toString());
                 writer.write("\n------------------------------\n");
-                System.out.println("Sale recorded successfully!");
+                System.out.println("Sale recorded successfully!\n");
             }
 
         } catch (IOException e) {
-            e.printStackTrace();  // מדפיס report על השגיאה.
+            e.printStackTrace();  // מדפיס report שגיאות.
         }
         //
     }
