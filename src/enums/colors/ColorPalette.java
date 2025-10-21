@@ -7,7 +7,7 @@ public class ColorPalette {
     }
     public Color getColorByName(String color_str){
         for(Color c : Color.values()){
-            if(c.name() == color_str) return c;
+            if(c.name().equals(color_str)) return c;
         }
         return null;
     }
